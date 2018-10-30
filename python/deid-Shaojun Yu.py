@@ -201,16 +201,16 @@ def deid(text_path='id.text', output_path='phone.phi'):
                     output_file.write('Patient {}\tNote {}\n'.format(patient, note))
                     # Now we have a full patient note stored in `chunk`, along with patient numerb and note number
 
-                    #                     pass all to check_for_phone to find any phone numbers in note.
-                    #                     check_for_phone(patient,note,chunk.strip(), output_file)
-                    #                     check_for_Date(patient,note,chunk.strip(), output_file)
-                    #                     check_for_PTName(patient,note,chunk.strip(), output_file)
-                    #                     check_for_age(patient,note,chunk.strip(), output_file)
-                    #                     check_for_HCPName(patient,note,chunk.strip(), output_file)
-                    check_for_RelativeProxyName(patient, note, chunk.strip(), output_file)
+                    # pass all to check_for_phone to find any phone numbers in note.
+                    check_for_phone(patient, note, chunk.strip(), output_file)
+                    # check_for_Date(patient, note, chunk.strip(), output_file)
+                    # check_for_PTName(patient, note, chunk.strip(), output_file)
+                    # check_for_age(patient, note, chunk.strip(), output_file)
+                    # check_for_HCPName(patient, note, chunk.strip(), output_file)
+                    # check_for_RelativeProxyName(patient, note, chunk.strip(), output_file)
 
-                    # initialize the chunk for the next note to be read
-                    chunk = ''
+                # initialize the chunk for the next note to be read
+                chunk = ''
 
 
 if __name__ == "__main__":
