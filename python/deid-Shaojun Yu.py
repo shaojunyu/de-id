@@ -8,14 +8,20 @@ months = {"January", "Jan", "February", "Feb", "March", "Mar", "April",
           "September", "Sept", "Sep", "October", "Oct", "November", "Nov",
           "December", "Dec"}
 date_pattern = ' ((\d{1,2})/(\d{1,2})) [^UP]'
+
 date_reg = re.compile(date_pattern, re.IGNORECASE)
 
 
 def check_for_Date(patient, note, chunk, output_handle):
+
+    # define offset based on the length of patient and note
     offset = 25 + len(patient) + len(note)
+
     for match in date_reg.finditer(chunk):
         month = match.groups()[1]
         day = match.groups()[2]
+
+        # constrains on month and dat value
         if not 1 <= int(month) <= 12:
             continue
         if not 1 <= int(day) <= 31:
@@ -25,8 +31,6 @@ def check_for_Date(patient, note, chunk, output_handle):
         result = str(match.span(1)[0] - offset) + ' ' + str(match.span(1)[0] - offset) + ' ' + str(
             match.span(1)[1] - offset)
         output_handle.write(result + '\n')
-
-
 ########### end of check_for_Date ################################
 
 
@@ -38,9 +42,12 @@ for indicator in PT_indicatos_pre:
     reg = re.compile(pattern, re.IGNORECASE)
     PT_regs.append(reg)
 
-
 def check_for_PTName(patient, note, chunk, output_handle):
+
+    # define offset based on the length of patient and note
     offset = 25 + len(patient) + len(note)
+
+    # use all regs to find PHI
     for reg in PT_regs:
         for match in reg.finditer(chunk):
             print(patient, note, end=' ')
@@ -48,8 +55,6 @@ def check_for_PTName(patient, note, chunk, output_handle):
             result = str(match.span(1)[0] - offset) + ' ' + str(match.span(1)[1] - offset) + ' ' + str(
                 match.span(1)[1] - offset)
             output_handle.write(result + '\n')
-
-
 ########### end of check_for_PTName ################################
 
 
@@ -75,8 +80,6 @@ def check_for_HCPName(patient, note, chunk, output_handle):
             result = str(match.span(1)[0] - offset) + ' ' + str(match.span(1)[1] - offset) + ' ' + str(
                 match.span(1)[1] - offset)
             output_handle.write(result + '\n')
-
-
 ########### end of check_for_HCPName ################################
 
 
@@ -108,8 +111,6 @@ def check_for_age(patient, note, chunk, output_handle):
                 result = str(match.span(1)[0] - offset) + ' ' + str(match.span(1)[1] - offset) + ' ' + str(
                     match.span(1)[1] - offset)
                 output_handle.write(result + '\n')
-
-
 ########### end of check_for_age ####################################
 
 
@@ -125,8 +126,6 @@ def check_for_phone(patient, note, chunk, output_handle):
         print((match.start() - offset), match.end() - offset, match.group())
         result = str(match.start() - offset) + ' ' + str(match.start() - offset) + ' ' + str(match.end() - offset)
         output_handle.write(result + '\n')
-
-
 ########### end of check_for_phone ####################################
 
 
@@ -171,8 +170,6 @@ def check_for_RelativeProxyName(patient, note, chunk, output_handle):
             result = str(match.span(1)[0] - offset) + ' ' + str(match.span(1)[1] - offset) + ' ' + str(
                 match.span(1)[1] - offset)
             output_handle.write(result + '\n')
-
-
 ########## end of check_for_RelativeProxyName #########################
 
 
